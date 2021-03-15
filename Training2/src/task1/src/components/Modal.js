@@ -1,11 +1,11 @@
 import React from 'react';
 import '../styles/modal.css';
 
-const Modal = ({ show }) => {
+const Modal = ({ show, onClose }) => {
   const renderBody = () => {
     return (
-      <div className='modal'>
-        <div className='modal-content'>
+      <div className='modal' onClick={() => onClose()}>
+        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
           <h1>Modal Title</h1>
           <p>This is the sample content of the modal</p>
         </div>
