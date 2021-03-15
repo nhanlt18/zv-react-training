@@ -1,0 +1,18 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+button {
+  display: inline-block;
+  padding: 0.2em 1.2em;
+  border-radius: 10em;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4eb5f1;
+  border: none;
+  transition: all 0.2s;
+  outline: none;
+}

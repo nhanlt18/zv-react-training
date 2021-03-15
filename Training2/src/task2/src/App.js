@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import CloseButton from './components/CloseButton';
 import Modal from './components/Modal';
+import './App.css';
 
 const App = () => {
   const [show, setShow] = useState(false);
 
-  const handleShow = (e) => {
+  const onShow = () => {
     setShow(true);
   };
 
-  const handleClose = (e) => {
+  const onClose = () => {
     setShow(false);
   };
 
   return (
-    <div>
+    <div className='App'>
       <h1>React Simple Modal</h1>
-      <Modal show={show} handleClose={handleClose}>
-        <h1>Hello</h1>
-        <CloseButton handleClose={handleClose} />
+      <Modal show={show} onClose={onClose}>
+        <h1>Title</h1>
+        <p>The content</p>
+        <CloseButton onClose={onClose} />
       </Modal>
-      <button onClick={(e) => handleShow(e)}>Launch</button>
+      <button onClick={(e) => onShow(e)}>Launch</button>
     </div>
   );
 };
