@@ -1,36 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/modal.css';
 
-const Modal = () => {
-  const [show, setShow] = useState(false);
-
-  const handleShow = (e) => {
-    setShow(true);
-  };
-
-  const handleClose = (e) => {
-    setShow(false);
-  };
-
+const Modal = ({ show }) => {
   const renderBody = () => {
     return (
       <div className='modal'>
         <div className='modal-content'>
-          <p>This is some contents of the modal</p>
-          <span onClick={(e) => handleClose(e)} className='close'>
-            &times;
-          </span>
+          <h1>Modal Title</h1>
+          <p>This is the sample content of the modal</p>
         </div>
       </div>
     );
   };
 
-  return (
-    <>
-      <button onClick={(e) => handleShow(e)}>Launch</button>
-      {show && renderBody()}
-    </>
-  );
+  return <>{show && renderBody()}</>;
 };
 
 export default Modal;
