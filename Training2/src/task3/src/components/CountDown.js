@@ -59,7 +59,6 @@ function CountDown() {
           onChange={(e) => setInput(e.target.value)}
         />
       </form>
-
       {<button onClick={onStart}>{success ? 'Start again' : 'Start'}</button>}
 
       {error && <Alert message={warning} type='warning' />}
