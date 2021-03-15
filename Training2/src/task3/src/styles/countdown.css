@@ -1,0 +1,38 @@
+.CountDown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+form {
+  padding: 1.5em 0.2em;
+}
+
+form input {
+  outline: none;
+  padding: 0.2em 0.3em;
+  margin: 0.1em 0.1em;
+  border: 2px solid #878787;
+}
+
+button {
+  display: inline-block;
+  padding: 0.2em 1.2em;
+  border-radius: 10em;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4eb5f1;
+  border: none;
+  transition: all 0.2s;
+  outline: none;
+}
+
+button:hover {
+  background-color:#4095c6;
+}
+
+div#count {
+  font-size: 100px;
+}
