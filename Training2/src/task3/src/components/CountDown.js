@@ -40,7 +40,6 @@ function CountDown() {
       setRunning(true);
       setCount(Number(input));
     }
-    console.log('Start button clicked');
   };
 
   const onToggle = () => {
