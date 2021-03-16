@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 
 import joke from '../apis/joke';
@@ -22,9 +22,12 @@ const Joke = () => {
     setJokeStory(respond.data);
   };
 
-  const onMoreJoke = _.debounce(() => {
-    fetch();
-  }, 500);
+  const onMoreJoke = useCallback(
+    _.debounce(() => {
+      fetch();
+    }, 500),
+    []
+  );
 
   return (
     <div>
