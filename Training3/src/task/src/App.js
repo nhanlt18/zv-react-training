@@ -33,7 +33,11 @@ const App = () => {
         <CloseButton onClose={onClose} />
       </Modal>
       <button onClick={(e) => onShow(e)}>Open Modal</button>
-      <p>Your action has been recorded &#128520;: {keyLog.join('-')}</p>
+      {keyLog.length > 0 ? (
+        <p>Your action has been recorded &#128520;: {keyLog.join('-')}</p>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
