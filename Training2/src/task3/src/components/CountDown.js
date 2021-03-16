@@ -3,23 +3,27 @@ import React, { useState, useEffect } from 'react';
 import Alert from './Alert';
 import '../styles/countdown.css';
 
-function CountDown() {
+const CountDown = () => {
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [count, setCount] = useState(0);
   const [warning, setWarning] = useState('');
-  const [running, setRunning] = useState('false');
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
-    const countDown = setInterval(() => {
-      if (running && count > 0) setCount(count - 1);
+    const countDownTimer = setInterval(() => {
+      if (running) setCount((c) => c - 1);
     }, 1000);
 
-    return () => {
-      clearInterval(countDown);
-    };
-  }, [count, running]);
+    return () => clearInterval(countDownTimer);
+  }, [running]);
+
+  useEffect(() => {
+    if (count <= 0) {
+      setRunning(false);
+    }
+  }, [count]);
 
   const onStart = () => {
     if (!input) {
@@ -69,6 +73,6 @@ function CountDown() {
       )}
     </div>
   );
-}
+};
 
 export default CountDown;
