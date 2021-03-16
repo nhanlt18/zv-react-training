@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
+
 import joke from '../apis/joke';
+// import debounce from '../utils/debounce';
+// import throttle from '../utils/throttle';
 
 const Joke = () => {
   const [loading, setLoading] = useState(true);
@@ -18,9 +22,9 @@ const Joke = () => {
     setJokeStory(respond.data);
   };
 
-  const onMoreJoke = () => {
+  const onMoreJoke = _.debounce(() => {
     fetch();
-  };
+  }, 500);
 
   return (
     <div>
