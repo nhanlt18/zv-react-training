@@ -23,18 +23,18 @@ const App = () => {
   return (
     <div className='App'>
       <h1>React Simple Key Logger</h1>
-      <Modal show={show} onClose={onClose}>
+      <Modal show={show} onClose={onClose} onKeyDown={onKeyDown}>
         <h1>Title</h1>
         <form>
           <label htmlFor='input'>Input</label>
           <br />
-          <textarea onKeyDown={onKeyDown} name='input' rows='4' cols='50' />
+          <textarea name='input' rows='4' cols='50' />
         </form>
         <CloseButton onClose={onClose} />
       </Modal>
       <button onClick={(e) => onShow(e)}>Open Modal</button>
       {keyLog.length > 0 ? (
-        <p>Your action has been recorded &#128520;: {keyLog.join('-')}</p>
+        <p>Your actions have been recorded &#128520;: {keyLog.join('-')}</p>
       ) : (
         ''
       )}
