@@ -8,14 +8,18 @@ import ProfileDetails from '../components/ProfileDetails';
 const Home = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
-
   const { users, loading } = useSelector((state) => state.users);
 
-  const reRender = () => {
+  const { success: successDelete } = useSelector((state) => state.userDelete);
+
+  useEffect(() => {
     dispatch(getUsers());
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (userId) => {
+    if (window.confirm('Are you sure?')) {
+      dispatch(deleteUser(userId));
+    }
   };
 
   return (
@@ -26,21 +30,25 @@ const Home = () => {
         <>
           <Link to='/users/add'>Add user</Link>
           <table>
-            <tr>
-              <th>Avatar</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-            {users.map(({ id, first_name, last_name, email }) => (
-              <tr key={id}>
-                <ProfileDetails
-                  id={id}
-                  firstName={first_name}
-                  lastName={last_name}
-                  email={email}
-                  reRender={reRender}
-                />
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th>Email</th>
               </tr>
+            </thead>
+            {users.map(({ id, first_name, last_name, email }) => (
+              <tbody key={id}>
+                <tr>
+                  <ProfileDetails
+                    id={id}
+                    firstName={first_name}
+                    lastName={last_name}
+                    email={email}
+                    deleteHandler={() => deleteHandler(id)}
+                  />
+                </tr>
+              </tbody>
             ))}
           </table>
         </>

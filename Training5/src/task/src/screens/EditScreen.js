@@ -10,11 +10,11 @@ const EditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
+  const { user, loading } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(getUser(match.params.id));
   }, [dispatch, match]);
-
-  const { user, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (user) {
@@ -24,9 +24,7 @@ const EditScreen = ({ match, history }) => {
     }
   }, [user]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const submitHandler = () => {
     dispatch(editUser(user.id, firstName, lastName, email));
 
     history.push('/');

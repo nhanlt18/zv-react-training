@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootSaga } from './sagas/saga';
 import {
   addUserReducer,
+  deleteUserReducer,
   editUserReducer,
   getUserReducer,
   getUsersReducer,
@@ -13,8 +14,9 @@ import {
 const reducer = combineReducers({
   users: getUsersReducer,
   user: getUserReducer,
-  updatedUser: editUserReducer,
-  addedUser: addUserReducer,
+  userEdit: editUserReducer,
+  userAdd: addUserReducer,
+  userDelete: deleteUserReducer,
 });
 
 const sagaMiddleware = createMiddleware();

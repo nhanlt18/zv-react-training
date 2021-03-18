@@ -8,7 +8,7 @@
     },
     {
       "id": 2,
-      "first_name": "Lucy",
+      "first_name": "Lucy aaa",
       "last_name": "Ballmer",
       "email": "lucyb56@gmail.com"
     },
@@ -17,12 +17,6 @@
       "first_name": "Anna",
       "last_name": "Smith",
       "email": "annasmith23@gmail.com"
-    },
-    {
-      "first_name": "jumpshot",
-      "last_name": "oe",
-      "email": "jumpshot@gmail.com",
-      "id": 8
     }
   ]
 }
