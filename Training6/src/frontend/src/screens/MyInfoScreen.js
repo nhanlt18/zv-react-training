@@ -10,25 +10,27 @@ const MyInfoScreen = ({ history }) => {
 
   const { token } = useSelector((state) => state.auth);
 
-  const { loading, user, error } = useSelector((state) => state.user);
+  const { loadingUser, user, errorUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (!token) {
       history.push('/login');
     } else {
-      dispatch(userGet(token));
+      if (!user) {
+        dispatch(userGet(token));
+      }
     }
-  }, [dispatch, history, token]);
+  }, [dispatch, history, token, user]);
 
-  return loading ? (
+  return loadingUser || loadingUser === undefined ? (
     'Loading...'
-  ) : error ? (
-    error.message
+  ) : errorUser ? (
+    errorUser.error
   ) : (
     <div>
       <Header myInfo />
       <div className='flex justify-center items-center h-screen'>
-        {loading === false ? <InfoCard info={user} /> : ''}
+        {<InfoCard info={user} />}
       </div>
     </div>
   );

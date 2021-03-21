@@ -7,7 +7,7 @@ const signToken = (payload) =>
     jwt.sign(
       payload,
       SECRECT_TOKEN,
-      { expiresIn: '15 minutes', algorithm: 'HS256' },
+      { expiresIn: '60 minutes', algorithm: 'HS256' },
       (error, token) => {
         if (error) reject(error);
         else resolve(token);

@@ -22,7 +22,7 @@ const Header = ({ user = false, home = false, myInfo = false }) => {
             <div className='hidden sm:block sm:ml-6'>
               <div className='flex space-x-4'>
                 <Link
-                  to='#'
+                  to='/app/users'
                   className={`${
                     user
                       ? 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
@@ -42,7 +42,7 @@ const Header = ({ user = false, home = false, myInfo = false }) => {
                   Home
                 </Link>
                 <Link
-                  to='app/my-info'
+                  to='/app/my-info'
                   className={`${
                     myInfo
                       ? 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
