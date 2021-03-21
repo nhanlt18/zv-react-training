@@ -4,6 +4,7 @@ export const USER_GET_FAILED = 'user/user_get_failed';
 export const USER_GET_ALL_REQUEST = 'user/user_get_all';
 export const USER_GET_ALL_SUCCESS = 'user/user_get_all_success';
 export const USER_GET_ALL_FAILED = 'user/user_get_all_failed';
+export const USER_LOGOUT = 'user/user_logout';
 
 const initialState = {};
 
@@ -28,6 +29,8 @@ export default function reducer(state = initialState, action) {
           code: action.payload.statusCode,
         },
       };
+    case USER_LOGOUT:
+      return {};
     default:
       return state;
   }
@@ -61,4 +64,8 @@ export const userGetAllSuccess = (users) => ({
 export const userGetAllFailed = (error, statusCode) => ({
   type: USER_GET_ALL_FAILED,
   payload: { error, statusCode },
+});
+
+export const userLogout = () => ({
+  type: USER_LOGOUT,
 });

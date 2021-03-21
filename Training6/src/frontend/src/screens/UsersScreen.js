@@ -24,7 +24,7 @@ const UsersScreen = ({ history }) => {
       }
 
       if (errorUserAll && errorUserAll.code === 401) {
-        setTimeout(() => history.push('/app'), 1500);
+        setTimeout(() => history.push('/app'), 400);
       }
     }
   }, [token, history, dispatch, users, errorUserAll]);
@@ -33,38 +33,37 @@ const UsersScreen = ({ history }) => {
     setChosenOne(idx);
   };
 
-  return loadingUserAll || loadingUserAll === undefined ? (
-    '...Loading'
-  ) : errorUserAll ? (
-    errorUserAll.error
-  ) : (
-    <div>
+  return (
+    <>
       <Header user />
-      <div className='container flex mx-auto w-3/6 py-3 m-3'>
-        <div className='flex-1'>
-          <ul>
-            {users.map((user, index) => (
-              <Link to={`/app/users/${index + 1}`} key={index}>
-                <li
-                  className={`p-3 m-3 rounded cursor-pointer text-gray-500 hover:text-gray-400 ${
-                    index === chosenOne ? 'bg-blue-100' : ''
-                  }`}
-                  onClick={() => handleChoose(index)}
-                >
-                  {user.fullName}
-                </li>
-              </Link>
-            ))}
-          </ul>
+      {loadingUserAll || loadingUserAll === undefined ? (
+        <div>{'...Loading'}</div>
+      ) : errorUserAll ? (
+        errorUserAll.error
+      ) : (
+        <div className='justify-center flex mx-auto w-3/6 h-screen p-20'>
+          <div className='mx-2 flex-1 border-r-4'>
+            <ul>
+              {users.map((user, index) => (
+                <Link to={`/app/users/${index + 1}`} key={index}>
+                  <li
+                    className={`p-3 m-3 rounded cursor-pointer text-gray-500 hover:text-gray-400 ${
+                      index === chosenOne ? 'bg-blue-100' : ''
+                    }`}
+                    onClick={() => handleChoose(index)}
+                  >
+                    {user.fullName}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
+          <div className='mx-2 flex-1'>
+            <InfoCard info={users[chosenOne]} />
+          </div>
         </div>
-        <div className='flex-1'>
-          {/* {users.map((user) => (
-            <InfoCard info={user} />
-          ))} */}
-          <InfoCard info={users[chosenOne]} />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

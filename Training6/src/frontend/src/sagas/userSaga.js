@@ -47,14 +47,11 @@ export function* handleUserGet({ payload }) {
 export function* handleUserGetAll({ payload }) {
   try {
     const response = yield call(requestUserGetAll, payload);
-    console.log(response);
     const { data } = response;
 
     yield put(userGetAllSuccess(data.users));
   } catch (error) {
     if (error.response) {
-      console.log(error.response.status);
-
       yield put(
         userGetAllFailed(error.response.data.error, error.response.status)
       );
