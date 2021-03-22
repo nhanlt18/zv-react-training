@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import Header from '../components/Header';
 import InfoCard from '../components/InfoCard';
 import { userGetAll } from '../ducks/modules/user';
 
-const UsersScreen = ({ history }) => {
-  const [chosenOne, setChosenOne] = useState(0);
+const UsersScreen = ({ history, location }) => {
+  const [chosenOne, setChosenOne] = useState(
+    location.pathname.split('/').slice(-1)[0] - 1
+  );
+  const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
 
   const { token } = useSelector((state) => state.auth);
@@ -45,7 +48,7 @@ const UsersScreen = ({ history }) => {
           <div className='mx-2 flex-1 border-r-4'>
             <ul>
               {users.map((user, index) => (
-                <Link to={`/app/users/${index + 1}`} key={index}>
+                <Link to={`${url}/${index + 1}`} key={index}>
                   <li
                     className={`p-3 m-3 rounded cursor-pointer text-gray-500 hover:text-gray-400 ${
                       index === chosenOne ? 'bg-blue-100' : ''
@@ -59,7 +62,11 @@ const UsersScreen = ({ history }) => {
             </ul>
           </div>
           <div className='mx-2 flex-1'>
-            <InfoCard info={users[chosenOne]} />
+            <Switch>
+              <Route path={`${path}/:id`}>
+                <InfoCard info={users[chosenOne]} />
+              </Route>
+            </Switch>
           </div>
         </div>
       )}

@@ -12,6 +12,7 @@ function App() {
     <Router>
       <main className='relative'>
         <Switch>
+          <Route path='/' exact component={WelcomeScreen} />
           <Route path='/login' exact component={LoginScreen} />
           <Route path='/app' exact component={WelcomeScreen} />
           <Route path='/app/my-info' exact component={MyInfoScreen} />
