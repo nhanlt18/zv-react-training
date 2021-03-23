@@ -78,7 +78,7 @@ function* handleDeleteUser({ payload }) {
   try {
     yield call(requestDeleteUser, payload.id);
 
-    yield put(deleteUserSuccess());
+    yield put(deleteUserSuccess(payload.id));
   } catch (error) {
     yield put(deleteUserFailed(error));
   }

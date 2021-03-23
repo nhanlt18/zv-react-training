@@ -3,20 +3,10 @@ import createMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { rootSaga } from './sagas/saga';
-import {
-  addUserReducer,
-  deleteUserReducer,
-  editUserReducer,
-  getUserReducer,
-  getUsersReducer,
-} from './reducers/userReducers';
+import { userReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
-  users: getUsersReducer,
-  user: getUserReducer,
-  userEdit: editUserReducer,
-  userAdd: addUserReducer,
-  userDelete: deleteUserReducer,
+  user: userReducer,
 });
 
 const sagaMiddleware = createMiddleware();

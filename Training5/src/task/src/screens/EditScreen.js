@@ -10,7 +10,7 @@ const EditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(getUser(match.params.id));

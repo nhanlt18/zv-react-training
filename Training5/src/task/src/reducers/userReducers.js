@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import {
   USERS_FETCH_FAIL,
   USERS_FETCH_REQUEST,
@@ -16,66 +18,93 @@ import {
   USER_FETCH_SUCCESS,
 } from '../constants/userConstants';
 
-export const getUsersReducer = (state = { users: [] }, action) => {
+const initialState = {
+  user: { loading: null, user: {}, error: null },
+  users: { loading: null, users: [], error: null },
+  add: { creating: null, user: {}, error: null },
+  delete: { loading: null },
+  edit: { loading: null },
+};
+
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case USERS_FETCH_REQUEST:
-      return { loading: true };
+      return { ...state, users: { ...state.users, loading: true } };
     case USERS_FETCH_SUCCESS:
-      return { loading: false, users: action.payload };
+      return {
+        ...state,
+        users: { ...state.users, loading: false, users: action.payload },
+      };
     case USERS_FETCH_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const getUserReducer = (state = {}, action) => {
-  switch (action.type) {
+      return {
+        ...state,
+        users: { ...state.users, loading: false, error: action.payload },
+      };
     case USER_FETCH_REQUEST:
-      return { loading: true };
+      return { ...state, user: { ...state.user, loading: true } };
     case USER_FETCH_SUCCESS:
-      return { user: action.payload, loading: false };
+      return {
+        ...state,
+        user: { ...state.user, loading: false, user: action.payload },
+      };
     case USER_FETCH_FAIL:
-      return { error: action.payload, loading: false };
-    default:
-      return state;
-  }
-};
+      return {
+        ...state,
+        user: { ...state.user, loading: false, error: action.payload },
+      };
 
-export const addUserReducer = (state = {}, action) => {
-  switch (action.type) {
     case USER_ADD_REQUEST:
-      return { loading: true };
+      return { ...state, add: { ...state.add, creating: true } };
     case USER_ADD_SUCCESS:
-      return { loading: false, user: action.payload };
+      return {
+        ...state,
+        add: { ...state.add, creating: false, user: action.payload },
+      };
     case USER_ADD_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const editUserReducer = (state = { user: {} }, action) => {
-  switch (action.type) {
+      return {
+        ...state,
+        add: { ...state.add, creating: false, error: action.payload },
+      };
     case USER_EDIT_REQUEST:
-      return { loading: true };
+      return {
+        ...state,
+        edit: { ...state.edit, loading: true, [action.payload.id]: true },
+      };
     case USER_EDIT_SUCCESS:
-      return { loading: false, success: true };
+      return {
+        ...state,
+        edit: { ...state.edit, loading: false, [action.payload.id]: false },
+      };
     case USER_EDIT_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const deleteUserReducer = (state = {}, action) => {
-  switch (action.type) {
+      return {
+        ...state,
+        edit: {
+          ...state.edit,
+          loading: false,
+          [action.payload.id]: false,
+          error: action.payload,
+        },
+      };
     case USER_DELETE_REQUEST:
-      return { loading: true };
+      return {
+        ...state,
+        delete: { ...state.delete, loading: true, [action.payload.id]: true },
+      };
     case USER_DELETE_SUCCESS:
-      return { loading: false, success: true };
+      return {
+        ...state,
+        delete: { ...state.delete, loading: false, [action.payload.id]: false },
+      };
     case USER_DELETE_FAIL:
-      return { error: action.payload, loading: false };
+      return {
+        ...state,
+        delete: {
+          ...state.delete,
+          loading: false,
+          [action.payload.id]: false,
+          error: action.payload,
+        },
+      };
     default:
       return state;
   }

@@ -8,13 +8,16 @@ import ProfileDetails from '../components/ProfileDetails';
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { users, loading } = useSelector((state) => state.users);
-
-  const { success: successDelete } = useSelector((state) => state.userDelete);
+  const { users, loading } = useSelector((state) => state.user.users);
+  const { creating } = useSelector((state) => state.user.add);
+  const { loading: editLoading } = useSelector((state) => state.user.edit);
+  const { loading: deleteLoading } = useSelector((state) => state.user.delete);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch, successDelete]);
+    if (users.length === 0 || creating || editLoading || deleteLoading) {
+      dispatch(getUsers());
+    }
+  }, [dispatch, users, creating, editLoading, deleteLoading]);
 
   const deleteHandler = (userId) => {
     if (window.confirm('Are you sure?')) {
