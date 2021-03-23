@@ -1,3 +1,5 @@
+import { LOGOUT } from './auth';
+
 export const USER_GET_REQUEST = 'user/user_get';
 export const USER_GET_SUCCESS = 'user/user_get_success';
 export const USER_GET_FAILED = 'user/user_get_failed';
@@ -6,7 +8,14 @@ export const USER_GET_ALL_SUCCESS = 'user/user_get_all_success';
 export const USER_GET_ALL_FAILED = 'user/user_get_all_failed';
 export const USER_LOGOUT = 'user/user_logout';
 
-const initialState = {};
+const initialState = {
+  loadingUser: null,
+  user: {},
+  errorUser: null,
+  loadingUserAll: null,
+  users: [],
+  errorUserAll: null,
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -30,7 +39,7 @@ export default function reducer(state = initialState, action) {
         },
       };
     case USER_LOGOUT:
-      return {};
+      return { ...initialState };
     default:
       return state;
   }
@@ -66,6 +75,4 @@ export const userGetAllFailed = (error, statusCode) => ({
   payload: { error, statusCode },
 });
 
-export const userLogout = () => ({
-  type: USER_LOGOUT,
-});
+export const userLogout = () => ({ type: USER_LOGOUT });

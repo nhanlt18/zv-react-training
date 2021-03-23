@@ -1,23 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import DashboardScreen from './screens/DashboardScreen';
 import LoginScreen from './screens/LoginScreen';
-import MyInfoScreen from './screens/MyInfoScreen';
-import NotFoundScreen from './screens/NotFoundScreen';
-import UsersScreen from './screens/UsersScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
 
 function App() {
   return (
     <Router>
       <main className='relative'>
         <Switch>
-          <Route path='/' exact component={WelcomeScreen} />
+          <Route path='/' exact component={LoginScreen} />
           <Route path='/login' exact component={LoginScreen} />
-          <Route path='/app' exact component={WelcomeScreen} />
-          <Route path='/app/my-info' exact component={MyInfoScreen} />
-          <Route path='/app/users' component={UsersScreen} />
-          <Route path='/app/*' component={NotFoundScreen} />
+          <Route path='/app' component={DashboardScreen} />
         </Switch>
       </main>
     </Router>

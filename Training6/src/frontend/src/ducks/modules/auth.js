@@ -1,3 +1,6 @@
+import _ from 'lodash';
+import { USER_LOGOUT } from './user';
+
 export const LOGIN_REQUEST = 'auth/login_request';
 export const LOGIN_SUCCESS = 'auth/login_success';
 export const LOGIN_INVALID = 'auth/login_invalid';
@@ -8,20 +11,25 @@ const token = localStorage.getItem('token')
   ? JSON.parse(localStorage.getItem('token')).token
   : null;
 
-const initialState = { token };
+const initialState = {
+  loading: null,
+  token,
+  message: null,
+  error: null,
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case LOGIN_SUCCESS:
-      return { loading: false, token: action.payload };
+      return { ...state, loading: false, token: action.payload };
     case LOGIN_INVALID:
-      return { loading: false, message: action.payload };
+      return { ...state, loading: false, message: action.payload };
     case LOGIN_FAIL:
-      return { loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload };
     case LOGOUT:
-      return { loggedOut: action.payload };
+      return { ...initialState, token: null };
     default:
       return state;
   }
@@ -51,6 +59,5 @@ export const logout = () => {
   localStorage.removeItem('token');
   return {
     type: LOGOUT,
-    payload: true,
   };
 };

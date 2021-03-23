@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from 'react-router-dom';
 
-import Header from '../components/Header';
 import InfoCard from '../components/InfoCard';
 import { userGetAll } from '../ducks/modules/user';
 
-const UsersScreen = ({ history, location }) => {
-  const [chosenOne, setChosenOne] = useState(
-    location.pathname.split('/').slice(-1)[0] - 1
-  );
+const UsersScreen = () => {
+  let history = useHistory();
+  let location = useLocation();
+
+  const initialIndex = location.pathname.split('/').slice(-1)[0] - 1;
+  const [chosenOne, setChosenOne] = useState(initialIndex);
   const { path, url } = useRouteMatch();
+
   const dispatch = useDispatch();
 
   const { token } = useSelector((state) => state.auth);
@@ -19,16 +28,12 @@ const UsersScreen = ({ history, location }) => {
   );
 
   useEffect(() => {
-    if (!token) {
-      history.push('/login');
-    } else {
-      if (!users && !errorUserAll) {
-        dispatch(userGetAll(token));
-      }
+    if (users.length === 0 && !errorUserAll) {
+      dispatch(userGetAll(token));
+    }
 
-      if (errorUserAll && errorUserAll.code === 401) {
-        setTimeout(() => history.push('/app'), 400);
-      }
+    if (errorUserAll && errorUserAll.code === 401) {
+      setTimeout(() => history.push('/app'), 400);
     }
   }, [token, history, dispatch, users, errorUserAll]);
 
@@ -38,8 +43,7 @@ const UsersScreen = ({ history, location }) => {
 
   return (
     <>
-      <Header user />
-      {loadingUserAll || loadingUserAll === undefined ? (
+      {loadingUserAll || loadingUserAll === null ? (
         <div>{'...Loading'}</div>
       ) : errorUserAll ? (
         errorUserAll.error
