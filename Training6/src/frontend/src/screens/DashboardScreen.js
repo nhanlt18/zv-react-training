@@ -30,9 +30,7 @@ const DashboardScreen = ({ history, location }) => {
           <MyInfoScreen />
         </Route>
         <Route path={`${path}/users`}>
-          <UsersScreen
-            initialIndex={location.pathname.split('/').slice(-1)[0] - 1}
-          />
+          <UsersScreen/>
         </Route>
         <Route path={`${path}/*`}>
           <NotFoundScreen />
