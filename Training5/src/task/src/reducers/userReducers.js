@@ -1,5 +1,3 @@
-import produce from 'immer';
-
 import {
   USERS_FETCH_FAIL,
   USERS_FETCH_REQUEST,
