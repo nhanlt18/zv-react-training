@@ -56,6 +56,10 @@ export const userReducer = (state = initialState, action) => {
     case USER_ADD_SUCCESS:
       return {
         ...state,
+        users: {
+          ...state.users,
+          users: [...state.users.users, action.payload],
+        },
         add: { ...state.add, creating: false, user: action.payload },
       };
     case USER_ADD_FAIL:
@@ -71,6 +75,12 @@ export const userReducer = (state = initialState, action) => {
     case USER_EDIT_SUCCESS:
       return {
         ...state,
+        users: {
+          ...state.users,
+          users: state.users.users.map((user) =>
+            user.id === action.payload.id ? action.payload : user
+          ),
+        },
         edit: { ...state.edit, loading: false, [action.payload.id]: false },
       };
     case USER_EDIT_FAIL:
@@ -91,6 +101,12 @@ export const userReducer = (state = initialState, action) => {
     case USER_DELETE_SUCCESS:
       return {
         ...state,
+        users: {
+          ...state.users,
+          users: state.users.users.filter(
+            (user) => user.id !== action.payload.id
+          ),
+        },
         delete: { ...state.delete, loading: false, [action.payload.id]: false },
       };
     case USER_DELETE_FAIL:

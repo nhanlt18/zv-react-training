@@ -14,10 +14,10 @@ const Home = () => {
   const { loading: deleteLoading } = useSelector((state) => state.user.delete);
 
   useEffect(() => {
-    if (users.length === 0 || creating || editLoading || deleteLoading) {
+    if (users.length === 0) {
       dispatch(getUsers());
     }
-  }, [dispatch, users, creating, editLoading, deleteLoading]);
+  }, [dispatch, users]);
 
   const deleteHandler = (userId) => {
     if (window.confirm('Are you sure?')) {
@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <div>
-      {loading ? (
+      {loading || creating || editLoading || deleteLoading ? (
         'loading...'
       ) : (
         <>
