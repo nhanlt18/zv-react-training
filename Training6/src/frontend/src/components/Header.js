@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { logout } from '../ducks/modules/auth';
 import { userLogout } from '../ducks/modules/user';
+import MenuLink from './MenuLink';
 
 const Header = () => {
   let location = useLocation();
@@ -24,37 +25,9 @@ const Header = () => {
           <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
             <div className='hidden sm:block sm:ml-6'>
               <div className='flex space-x-4'>
-                <Link
-                  to='/app/users'
-                  className={`${
-                    location.pathname.includes('users')
-                      ? 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
-                  }`}
-                >
-                  User
-                </Link>
-                <Link
-                  to='/app'
-                  className={`${
-                    !location.pathname.includes('users') &&
-                    !location.pathname.includes('my-info')
-                      ? 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
-                  }`}
-                >
-                  Home
-                </Link>
-                <Link
-                  to='/app/my-info'
-                  className={`${
-                    location.pathname.includes('my-info')
-                      ? 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
-                  }`}
-                >
-                  My Info
-                </Link>
+                <MenuLink to='/app/users' label='Users' />
+                <MenuLink activeOnlyWhenExact={true} to='/app' label='Home' />
+                <MenuLink to='/app/my-info' label='My Info' />
               </div>
             </div>
           </div>
