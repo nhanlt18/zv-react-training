@@ -19,10 +19,10 @@ const Home = () => {
   } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (users.length === 0) {
+    if (users.length === 0 || editingById[currentUserId]) {
       dispatch(getUsers());
     }
-  }, [dispatch, users]);
+  }, [dispatch, users, editingById, currentUserId]);
 
   const deleteHandler = (userId) => {
     if (window.confirm('Are you sure?')) {

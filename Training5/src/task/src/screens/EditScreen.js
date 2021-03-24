@@ -16,7 +16,9 @@ const EditScreen = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(getUser(match.params.id));
+  }, [dispatch, match]);
 
+  useEffect(() => {
     if (users.length !== 0 && currentUserId) {
       const { first_name, last_name, email } = users.filter(
         (user) => user.id === currentUserId
@@ -25,18 +27,7 @@ const EditScreen = ({ match, history }) => {
       setLastName(last_name);
       setEmail(email);
     }
-  }, [dispatch, match, users, currentUserId]);
-
-  // useEffect(() => {
-  //   if (users.length !== 0 && currentUserId) {
-  //     const { first_name, last_name, email } = users.filter(
-  //       (user) => user.id === currentUserId
-  //     )[0];
-  //     setFirstName(first_name);
-  //     setLastName(last_name);
-  //     setEmail(email);
-  //   }
-  // }, [users, currentUserId]);
+  }, [users, currentUserId]);
 
   const submitHandler = () => {
     dispatch(editUser(currentUserId, firstName, lastName, email));
