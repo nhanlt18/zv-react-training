@@ -70,7 +70,7 @@ function* handleEditUser({ payload }) {
 
     yield put(editUserSuccess(data));
   } catch (error) {
-    yield put(editUserFailed(error));
+    yield put(editUserFailed(payload.id, error));
   }
 }
 
@@ -80,7 +80,7 @@ function* handleDeleteUser({ payload }) {
 
     yield put(deleteUserSuccess(payload.id));
   } catch (error) {
-    yield put(deleteUserFailed(error));
+    yield put(deleteUserFailed(payload.id, error));
   }
 }
 

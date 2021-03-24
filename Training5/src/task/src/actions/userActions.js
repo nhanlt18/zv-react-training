@@ -91,9 +91,9 @@ export const editUserSuccess = (user) => ({
   payload: user,
 });
 
-export const editUserFailed = (error) => ({
+export const editUserFailed = (id, error) => ({
   type: USER_EDIT_FAIL,
-  payload: error,
+  payload: { id, error },
 });
 
 /**
@@ -109,7 +109,7 @@ export const deleteUserSuccess = (id) => ({
   payload: { id },
 });
 
-export const deleteUserFailed = (error) => ({
+export const deleteUserFailed = (id, error) => ({
   type: USER_DELETE_FAIL,
-  payload: error,
+  payload: { id, error },
 });

@@ -17,107 +17,98 @@ import {
 } from '../constants/userConstants';
 
 const initialState = {
-  user: { loading: null, user: {}, error: null },
-  users: { loading: null, users: [], error: null },
-  add: { creating: null, user: {}, error: null },
-  delete: { loading: null },
-  edit: { loading: null },
+  users: [],
+  fetchingUsers: null,
+  fetchingUsersError: null,
+
+  currentUserId: null,
+  fetchingUserDetails: null,
+  fetchingUserDetailsError: null,
+
+  addingUser: null,
+  addingUserError: null,
+
+  deletingById: {},
+  editingById: {},
+  errorById: {},
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case USERS_FETCH_REQUEST:
-      return { ...state, users: { ...state.users, loading: true } };
+      return { ...state, fetchingUsers: true };
     case USERS_FETCH_SUCCESS:
-      return {
-        ...state,
-        users: { ...state.users, loading: false, users: action.payload },
-      };
+      return { ...state, users: action.payload, fetchingUsers: false };
     case USERS_FETCH_FAIL:
       return {
         ...state,
-        users: { ...state.users, loading: false, error: action.payload },
+        fetchingUsers: false,
+        fetchingUsersError: action.payload,
       };
     case USER_FETCH_REQUEST:
-      return { ...state, user: { ...state.user, loading: true } };
+      return { ...state, fetchingUserDetails: true };
     case USER_FETCH_SUCCESS:
-      return {
-        ...state,
-        user: { ...state.user, loading: false, user: action.payload },
-      };
+      const listUserIds = state.users.map((user) => user.id);
+      return listUserIds.includes(action.payload.id)
+        ? {
+            ...state,
+            users: [...state.users],
+            currentUserId: action.payload.id,
+            fetchingUserDetails: false,
+          }
+        : {
+            ...state,
+            users: [...state.users, action.payload],
+            currentUserId: action.payload.id,
+            fetchingUserDetails: false,
+          };
     case USER_FETCH_FAIL:
       return {
         ...state,
-        user: { ...state.user, loading: false, error: action.payload },
+        fetchingUserDetails: false,
+        fetchingUserDetailsError: action.payload,
       };
-
     case USER_ADD_REQUEST:
-      return { ...state, add: { ...state.add, creating: true } };
+      return { ...state, addingUser: true };
     case USER_ADD_SUCCESS:
       return {
         ...state,
-        users: {
-          ...state.users,
-          users: [...state.users.users, action.payload],
-        },
-        add: { ...state.add, creating: false, user: action.payload },
+        addingUser: false,
+        users: [...state.users, action.payload],
       };
     case USER_ADD_FAIL:
-      return {
-        ...state,
-        add: { ...state.add, creating: false, error: action.payload },
-      };
+      return { ...state, addingUser: false, addingUserError: action.payload };
     case USER_EDIT_REQUEST:
-      return {
-        ...state,
-        edit: { ...state.edit, loading: true, [action.payload.id]: true },
-      };
+      return { ...state, editingById: { [action.payload.id]: true } };
     case USER_EDIT_SUCCESS:
       return {
         ...state,
-        users: {
-          ...state.users,
-          users: state.users.users.map((user) =>
+        users: [
+          ...state.users.map((user) =>
             user.id === action.payload.id ? action.payload : user
           ),
-        },
-        edit: { ...state.edit, loading: false, [action.payload.id]: false },
+        ],
+        editingById: { [action.payload.id]: false },
       };
     case USER_EDIT_FAIL:
       return {
         ...state,
-        edit: {
-          ...state.edit,
-          loading: false,
-          [action.payload.id]: false,
-          error: action.payload,
-        },
+        editingById: { [action.payload.id]: false },
+        errorById: { [action.payload.id]: true, error: action.payload.error },
       };
     case USER_DELETE_REQUEST:
-      return {
-        ...state,
-        delete: { ...state.delete, loading: true, [action.payload.id]: true },
-      };
+      return { ...state, deletingById: { [action.payload.id]: true } };
     case USER_DELETE_SUCCESS:
       return {
         ...state,
-        users: {
-          ...state.users,
-          users: state.users.users.filter(
-            (user) => user.id !== action.payload.id
-          ),
-        },
-        delete: { ...state.delete, loading: false, [action.payload.id]: false },
+        users: [...state.users.filter((user) => user.id !== action.payload.id)],
+        deletingById: { [action.payload.id]: false },
       };
     case USER_DELETE_FAIL:
       return {
         ...state,
-        delete: {
-          ...state.delete,
-          loading: false,
-          [action.payload.id]: false,
-          error: action.payload,
-        },
+        deletingById: { [action.payload.id]: false },
+        errorById: { [action.payload.id]: true, error: action.payload.error },
       };
     default:
       return state;

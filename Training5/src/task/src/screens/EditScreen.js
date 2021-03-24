@@ -10,29 +10,43 @@ const EditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.user.user);
+  const { users, editingById, currentUserId } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
     dispatch(getUser(match.params.id));
-  }, [dispatch, match]);
 
-  useEffect(() => {
-    if (user) {
-      setFirstName(user.first_name);
-      setLastName(user.last_name);
-      setEmail(user.email);
+    if (users.length !== 0 && currentUserId) {
+      const { first_name, last_name, email } = users.filter(
+        (user) => user.id === currentUserId
+      )[0];
+      setFirstName(first_name);
+      setLastName(last_name);
+      setEmail(email);
     }
-  }, [user]);
+  }, [dispatch, match, users, currentUserId]);
+
+  // useEffect(() => {
+  //   if (users.length !== 0 && currentUserId) {
+  //     const { first_name, last_name, email } = users.filter(
+  //       (user) => user.id === currentUserId
+  //     )[0];
+  //     setFirstName(first_name);
+  //     setLastName(last_name);
+  //     setEmail(email);
+  //   }
+  // }, [users, currentUserId]);
 
   const submitHandler = () => {
-    dispatch(editUser(user.id, firstName, lastName, email));
+    dispatch(editUser(currentUserId, firstName, lastName, email));
 
     history.push('/');
   };
 
   return (
     <>
-      {loading ? (
+      {editingById[currentUserId] ? (
         '...loading'
       ) : (
         <>

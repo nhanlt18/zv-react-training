@@ -8,10 +8,15 @@ import ProfileDetails from '../components/ProfileDetails';
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { users, loading } = useSelector((state) => state.user.users);
-  const { creating } = useSelector((state) => state.user.add);
-  const { loading: editLoading } = useSelector((state) => state.user.edit);
-  const { loading: deleteLoading } = useSelector((state) => state.user.delete);
+  const {
+    users,
+    fetchingUsers,
+    currentUserId,
+    fetchingUserDetails,
+    addingUser,
+    deletingById,
+    editingById,
+  } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -27,7 +32,11 @@ const Home = () => {
 
   return (
     <div>
-      {loading || creating || editLoading || deleteLoading ? (
+      {fetchingUsers ||
+      fetchingUserDetails ||
+      addingUser ||
+      deletingById[currentUserId] ||
+      editingById[currentUserId] ? (
         'loading...'
       ) : (
         <>
